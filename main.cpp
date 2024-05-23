@@ -116,51 +116,34 @@ void visualize_wav(const std::string& filename, int downsample_factor = 10) { //
 std::vector<Complex> DFT(const std::vector<double>& input) {
     int N = input.size();
     std::vector<Complex> output(N);
-
-    // Dla każdej wartości wyjściowej
     for (int k = 0; k < N; ++k) {
-        // Sumujemy iloczyn wartości wejściowych i eksponencjalnej zespolonej
         for (int n = 0; n < N; ++n) {
             double theta = 2.0 * M_PI * k * n / N;
             output[k] += input[n] * Complex(cos(theta), -sin(theta));
         }
     }
-
     return output;
 }
 std::vector<Complex> IDFT(const std::vector<Complex>& input) {
     int N = input.size();
     std::vector<Complex> output(N);
-
-	//dla kazdego elementu wyjsciowego
     for (int n = 0; n < N; ++n) {
-		// sumujemy iloczyn wartosci wejsciowych i eksponencjalnej zespolonej
         for (int k = 0; k < N; ++k) {
             double theta = 2.0 * M_PI * k * n / N;
             output[n] += input[k] * Complex(cos(theta), sin(theta));
         }
         output[n] /= N;
     }
-
     return output;
 }
-
-// Funkcja do wizualizacji DFT
 void visualize_DFT(const std::vector<double>& input) {
-    // Obliczamy DFT sygnału wejściowego
     std::vector<Complex> output = DFT(input);
-
-    // Tworzymy dwa wektory: częstotliwości i amplitudy
     std::vector<double> frequencies(output.size());
     std::vector<double> magnitudes(output.size());
-
-    // Wypełniamy wektory wartościami
     for (size_t i = 0; i < output.size(); ++i) {
         frequencies[i] = i;
         magnitudes[i] = std::abs(output[i]);
     }
-
-    // Rysujemy wykres amplitud w funkcji częstotliwości
     matplot::plot(frequencies, magnitudes);
     matplot::xlabel("Częstotliwosc");
     matplot::ylabel("Amplituda");
