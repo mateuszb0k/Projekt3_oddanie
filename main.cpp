@@ -80,7 +80,7 @@ void pila(int freq, int num_samples = 1000) {
 	m::show();
 }
 
-void prostokatny(int freq, int num_samples = 1000) { //default 1000 najoptymalniejsze rezultaty?
+void prostokatny(int freq, int num_samples = 1000) {
     std::vector<double> x(num_samples);
 	double step = 2 * 3.14159265359 * freq / num_samples;
 	for (int i = 0; i < num_samples; ++i) {
@@ -89,7 +89,7 @@ void prostokatny(int freq, int num_samples = 1000) { //default 1000 najoptymalni
 	m::plot(x, gen_prostokatny(freq, num_samples));
 	m::show();
 }
-void visualize_wav(const std::string& filename, int downsample_factor = 10) { //optymalny czas/jakosc downsample factor ok 40!
+void visualize_wav(const std::string& filename, int downsample_factor = 10) {
     SndfileHandle file { filename };
     if (file.error()) {
         std::cerr << "Error: blad pliku\n";
@@ -191,7 +191,7 @@ std::vector<std::vector<std::vector<double>>> filter2D(const std::vector<std::ve
                             sum += input[ii][jj][c] * kernel[ki][kj];
                         }
 						else {
-							sum += input[ii][jj][0] * kernel[ki][kj]; //ten grayscale troche sketchy nie wiem czy zadziala
+							sum += input[ii][jj][0] * kernel[ki][kj];
 						}
                     }
                 }
@@ -231,7 +231,7 @@ std::vector<std::vector<double>> gaussianBlurKernel() {
 	};
 }
 
-PYBIND11_MODULE(cmake_example, m) {//nagłówki funkcji dla cmake 
+PYBIND11_MODULE(cmake_example, m) {
 	m.def("gen_sinus", &gen_sinus);
 	m.def("gen_cosinus", &gen_cosinus);
 	m.def("gen_pila", &gen_pila);
